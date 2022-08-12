@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastermind</title>
+
+    <style>
+        #main {
+            text-align: center;
+        }
+
+        #word_to_be_guessed {
+            /* color: rgba(0, 0, 0, 0); */
+            /* text-decoration: underline; */
+            /* text-decoration-style: dashed; */
+            text-decoration-color: black;
+            font-weight: bold;
+
+            font-size: 2em;
+        }
+
+        #word_to_be_guessed>u {
+            color: rgba(0, 0, 0, 0);
+            text-decoration-color: black;
+        }
+
+        #result {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            margin-top: 2%;
+        }
+
+        #presence_list,
+        #correct_place_list {
+            list-style-type: none;
+
+            padding: 0%;
+            margin: 0%;
+        }
+
+        #presence_list>li,
+        #correct_place_list>li {
+            padding: 0%;
+            margin: 0% auto;
+        }
+
+        #alphabets {
+            background-color: red;
+
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .alphabet {
+            border: 1px black solid;
+
+            margin: 1% 2%;
+            /* padding: 1% 2%; */
+            min-width: 4%;
+
+            background-color: rgba(0, 0, 0, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <section>
+            <p id="word_to_be_guessed"><u class="letters" id="letter1">W</u> <u class="letters" id="letter2">M</u> <u
+                    class="letters" id="letter3">W</u> <u class="letters" id="letter4">M</u></p>
+        </section>
+
+        <input type="text" id="guess_input" placeholder="Put your guess here" title="Put your guess here" />
+        <input type="button" id="guess_submit" value="Submit" />
+        <input type="button" id="clear" value="Clear" />
+
+        <section id="result">
+            <div style="margin-right:5%">
+                <ul id="presence_list"></ul>
+            </div>
+            <div>
+                <ul id="correct_place_list"></ul>
+            </div>
+        </section>
+
+        <section id="alphabets">
+            <button class="alphabet" value="a" onclick="btnClick(this)">a</button>
+            <button class="alphabet" value="b" onclick="btnClick(this)">b</button>
+            <button class="alphabet" value="c" onclick="btnClick(this)">c</button>
+            <button class="alphabet" value="d" onclick="btnClick(this)">d</button>
+            <button class="alphabet" value="e" onclick="btnClick(this)">e</button>
+            <button class="alphabet" value="f" onclick="btnClick(this)">f</button>
+            <button class="alphabet" value="g" onclick="btnClick(this)">g</button>
+            <button class="alphabet" value="h" onclick="btnClick(this)">h</button>
+            <button class="alphabet" value="i" onclick="btnClick(this)">i</button>
+            <button class="alphabet" value="j" onclick="btnClick(this)">j</button>
+            <button class="alphabet" value="k" onclick="btnClick(this)">k</button>
+            <button class="alphabet" value="l" onclick="btnClick(this)">l</button>
+            <button class="alphabet" value="m" onclick="btnClick(this)">m</button>
+            <button class="alphabet" value="n" onclick="btnClick(this)">n</button>
+            <button class="alphabet" value="o" onclick="btnClick(this)">o</button>
+            <button class="alphabet" value="p" onclick="btnClick(this)">p</button>
+            <button class="alphabet" value="q" onclick="btnClick(this)">q</button>
+            <button class="alphabet" value="r" onclick="btnClick(this)">r</button>
+            <button class="alphabet" value="s" onclick="btnClick(this)">s</button>
+            <button class="alphabet" value="t" onclick="btnClick(this)">t</button>
+            <button class="alphabet" value="u" onclick="btnClick(this)">u</button>
+            <button class="alphabet" value="v" onclick="btnClick(this)">v</button>
+            <button class="alphabet" value="w" onclick="btnClick(this)">w</button>
+            <button class="alphabet" value="x" onclick="btnClick(this)">x</button>
+            <button class="alphabet" value="y" onclick="btnClick(this)">y</button>
+            <button class="alphabet" value="z" onclick="btnClick(this)">z</button>
+        </section>
+    </div>
+
+    <script>
+        // import wordList from './mastermind_words.json' assert {type: 'json'};
+
+        var wordList = {
+            "four_letter": [
+                "etch",
+                "bike",
+                "knob",
+                "mask",
+            ]
+        }
+
+        console.log(wordList);
+        console.log(wordList.four_letter);
+        console.log(wordList.four_letter[0], wordList.four_letter[1], wordList.four_letter[2]);
+
+        /* 0 to length-1 */
+        var rand = Math.floor(0 + Math.random() * wordList.four_letter.length);
+        console.log(rand);
+
+        var word = wordList.four_letter[rand];
+
+        // for (var i = 0; i < word.length; i++) {
+        //     document.getElementById(`letter${i + 1}`).innerHTML = word[i].toUpperCase();
+        // }
+
+        // document.getElementById("presence_list").innerHTML = null;
+        var presenceList = document.getElementById('presence_list');
+        while (presenceList.firstChild)
+            presenceList.removeChild(presenceList.firstChild);
+        // document.getElementById("correct_place_list").innerHTML = null;
+        var correctList = document.getElementById('correct_place_list');
+        while (correctList.firstChild)
+            correctList.removeChild(correctList.firstChild);
+
+        document.getElementById("guess_submit").onclick = function guessTrigger() {
+            var guessedWord = document.getElementById("guess_input").value;
+            console.log("word", word);
+            console.log("guessed", guessedWord);
+
+            if (word.match(guessedWord)) {
+                console.log("Matched");
+            }
+
+            /* check for presence then place */
+            for (var i = 0; i < guessedWord.length; i++) {
+                if (word.includes(guessedWord[i])) {
+                    console.log(guessedWord[i], "present in word");
+                    var listItem1 = document.createElement('li');
+                    listItem1.appendChild(document.createTextNode(`${guessedWord[i]} present in word`));
+                    presenceList.appendChild(listItem1);
+                    if (word.indexOf(guessedWord[i]) == i) {
+                        console.log(guessedWord[i], "in correct place");
+                        var listItem2 = document.createElement('li');
+                        listItem2.appendChild(document.createTextNode(`${guessedWord[i]} in correct place`));
+                        correctList.appendChild(listItem2);
+                    }
+                }
+            }
+
+            document.getElementById('guess_input').focus();
+        }
+
+        function btnClick(event) {
+            console.log(event.value);
+            document.getElementById('guess_input').value += event.value;
+        }
+
+        document.getElementById('clear').onclick = function() {
+            document.getElementById('guess_input').value = '';
+        }
+    </script>
+</body>
+
+</html>
