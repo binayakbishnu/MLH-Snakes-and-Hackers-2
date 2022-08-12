@@ -134,17 +134,11 @@
 
         console.log(wordList);
         console.log(wordList.four_letter);
-        console.log(wordList.four_letter[0], wordList.four_letter[1], wordList.four_letter[2]);
 
         /* 0 to length-1 */
         var rand = Math.floor(0 + Math.random() * wordList.four_letter.length);
         console.log(rand);
-
         var word = wordList.four_letter[rand];
-
-        // for (var i = 0; i < word.length; i++) {
-        //     document.getElementById(`letter${i + 1}`).innerHTML = word[i].toUpperCase();
-        // }
 
         // document.getElementById("presence_list").innerHTML = null;
         var presenceList = document.getElementById('presence_list');
@@ -156,12 +150,24 @@
             correctList.removeChild(correctList.firstChild);
 
         document.getElementById("guess_submit").onclick = function guessTrigger() {
+            var presenceList = document.getElementById('presence_list');
+            var correctList = document.getElementById('correct_place_list');
+
             var guessedWord = document.getElementById("guess_input").value;
             console.log("word", word);
             console.log("guessed", guessedWord);
 
             if (word.match(guessedWord)) {
-                console.log("Matched");
+                alert("Matched!");
+                var presenceList = document.getElementById('presence_list');
+                while (presenceList.firstChild)
+                    presenceList.removeChild(presenceList.firstChild);
+                var correctList = document.getElementById('correct_place_list');
+                while (correctList.firstChild)
+                    correctList.removeChild(correctList.firstChild);
+                document.getElementById('guess_input').value = '';
+                location.reload();
+                return;
             }
 
             /* check for presence then place */
@@ -176,6 +182,8 @@
                         var listItem2 = document.createElement('li');
                         listItem2.appendChild(document.createTextNode(`${guessedWord[i]} in correct place`));
                         correctList.appendChild(listItem2);
+                        document.getElementById(`letter${i+1}`).innerText = guessedWord[i];
+                        document.getElementById(`letter${i+1}`).style.color = "black";
                     }
                 }
             }
@@ -188,7 +196,7 @@
             document.getElementById('guess_input').value += event.value;
         }
 
-        document.getElementById('clear').onclick = function() {
+        document.getElementById('clear').onclick = function () {
             document.getElementById('guess_input').value = '';
         }
     </script>
