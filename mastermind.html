@@ -50,7 +50,7 @@
         }
 
         #alphabets {
-            background-color: red;
+            /* background-color: red; */
 
             width: auto;
             display: flex;
@@ -91,38 +91,38 @@
         </section>
 
         <section id="alphabets">
-            <button class="alphabet" value="a" onclick="btnClick(this)">a</button>
-            <button class="alphabet" value="b" onclick="btnClick(this)">b</button>
-            <button class="alphabet" value="c" onclick="btnClick(this)">c</button>
-            <button class="alphabet" value="d" onclick="btnClick(this)">d</button>
-            <button class="alphabet" value="e" onclick="btnClick(this)">e</button>
-            <button class="alphabet" value="f" onclick="btnClick(this)">f</button>
-            <button class="alphabet" value="g" onclick="btnClick(this)">g</button>
-            <button class="alphabet" value="h" onclick="btnClick(this)">h</button>
-            <button class="alphabet" value="i" onclick="btnClick(this)">i</button>
-            <button class="alphabet" value="j" onclick="btnClick(this)">j</button>
-            <button class="alphabet" value="k" onclick="btnClick(this)">k</button>
-            <button class="alphabet" value="l" onclick="btnClick(this)">l</button>
-            <button class="alphabet" value="m" onclick="btnClick(this)">m</button>
-            <button class="alphabet" value="n" onclick="btnClick(this)">n</button>
-            <button class="alphabet" value="o" onclick="btnClick(this)">o</button>
-            <button class="alphabet" value="p" onclick="btnClick(this)">p</button>
-            <button class="alphabet" value="q" onclick="btnClick(this)">q</button>
-            <button class="alphabet" value="r" onclick="btnClick(this)">r</button>
-            <button class="alphabet" value="s" onclick="btnClick(this)">s</button>
-            <button class="alphabet" value="t" onclick="btnClick(this)">t</button>
-            <button class="alphabet" value="u" onclick="btnClick(this)">u</button>
-            <button class="alphabet" value="v" onclick="btnClick(this)">v</button>
-            <button class="alphabet" value="w" onclick="btnClick(this)">w</button>
-            <button class="alphabet" value="x" onclick="btnClick(this)">x</button>
-            <button class="alphabet" value="y" onclick="btnClick(this)">y</button>
-            <button class="alphabet" value="z" onclick="btnClick(this)">z</button>
+            <button class="alphabet" id="a" value="a" onclick="btnClick(this)">a</button>
+            <button class="alphabet" id="b" value="b" onclick="btnClick(this)">b</button>
+            <button class="alphabet" id="c" value="c" onclick="btnClick(this)">c</button>
+            <button class="alphabet" id="d" value="d" onclick="btnClick(this)">d</button>
+            <button class="alphabet" id="e" value="e" onclick="btnClick(this)">e</button>
+            <button class="alphabet" id="f" value="f" onclick="btnClick(this)">f</button>
+            <button class="alphabet" id="g" value="g" onclick="btnClick(this)">g</button>
+            <button class="alphabet" id="h" value="h" onclick="btnClick(this)">h</button>
+            <button class="alphabet" id="i" value="i" onclick="btnClick(this)">i</button>
+            <button class="alphabet" id="j" value="j" onclick="btnClick(this)">j</button>
+            <button class="alphabet" id="k" value="k" onclick="btnClick(this)">k</button>
+            <button class="alphabet" id="l" value="l" onclick="btnClick(this)">l</button>
+            <button class="alphabet" id="m" value="m" onclick="btnClick(this)">m</button>
+            <button class="alphabet" id="n" value="n" onclick="btnClick(this)">n</button>
+            <button class="alphabet" id="o" value="o" onclick="btnClick(this)">o</button>
+            <button class="alphabet" id="p" value="p" onclick="btnClick(this)">p</button>
+            <button class="alphabet" id="q" value="q" onclick="btnClick(this)">q</button>
+            <button class="alphabet" id="r" value="r" onclick="btnClick(this)">r</button>
+            <button class="alphabet" id="s" value="s" onclick="btnClick(this)">s</button>
+            <button class="alphabet" id="t" value="t" onclick="btnClick(this)">t</button>
+            <button class="alphabet" id="u" value="u" onclick="btnClick(this)">u</button>
+            <button class="alphabet" id="v" value="v" onclick="btnClick(this)">v</button>
+            <button class="alphabet" id="w" value="w" onclick="btnClick(this)">w</button>
+            <button class="alphabet" id="x" value="x" onclick="btnClick(this)">x</button>
+            <button class="alphabet" id="y" value="y" onclick="btnClick(this)">y</button>
+            <button class="alphabet" id="z" value="z" onclick="btnClick(this)">z</button>
         </section>
+
+        <h1 id="reloading" style="display: none; font-style: italic;">Reloading...</h1>
     </div>
 
     <script>
-        // import wordList from './mastermind_words.json' assert {type: 'json'};
-
         var wordList = {
             "four_letter": [
                 "etch",
@@ -157,19 +157,6 @@
             console.log("word", word);
             console.log("guessed", guessedWord);
 
-            if (word.match(guessedWord)) {
-                alert("Matched!");
-                var presenceList = document.getElementById('presence_list');
-                while (presenceList.firstChild)
-                    presenceList.removeChild(presenceList.firstChild);
-                var correctList = document.getElementById('correct_place_list');
-                while (correctList.firstChild)
-                    correctList.removeChild(correctList.firstChild);
-                document.getElementById('guess_input').value = '';
-                location.reload();
-                return;
-            }
-
             /* check for presence then place */
             for (var i = 0; i < guessedWord.length; i++) {
                 if (word.includes(guessedWord[i])) {
@@ -182,12 +169,34 @@
                         var listItem2 = document.createElement('li');
                         listItem2.appendChild(document.createTextNode(`${guessedWord[i]} in correct place`));
                         correctList.appendChild(listItem2);
-                        document.getElementById(`letter${i+1}`).innerText = guessedWord[i];
-                        document.getElementById(`letter${i+1}`).style.color = "black";
+                        document.getElementById(`letter${i + 1}`).innerText = guessedWord[i];
+                        document.getElementById(`letter${i + 1}`).style.color = "black";
+                        document.getElementById(`${guessedWord[i]}`).style.backgroundColor = "green";
                     }
+                    else {
+                        document.getElementById(`${guessedWord[i]}`).style.backgroundColor = "orange";
+                    }
+                }
+                else {
+                    document.getElementById(`${guessedWord[i]}`).style.backgroundColor = "red";
                 }
             }
 
+            if (word.match(guessedWord)) {
+                // alert("Matched!");
+                var presenceList = document.getElementById('presence_list');
+                while (presenceList.firstChild)
+                    presenceList.removeChild(presenceList.firstChild);
+                var correctList = document.getElementById('correct_place_list');
+                while (correctList.firstChild)
+                    correctList.removeChild(correctList.firstChild);
+                document.getElementById('guess_input').value = '';
+
+                document.getElementById('reloading').style.display = 'block';
+                setTimeout(function () { location.reload(); }, 3000);
+            }
+
+            document.getElementById('guess_input').value = '';
             document.getElementById('guess_input').focus();
         }
 
