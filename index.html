@@ -172,12 +172,8 @@
             ]
         }
 
-        console.log(wordList);
-        console.log(wordList.four_letter);
-
         /* 0 to length-1 */
         var rand = Math.floor(0 + Math.random() * wordList.four_letter.length);
-        console.log(rand);
         var word = wordList.four_letter[rand];
 
         var presenceList = document.getElementById('presence_list');
@@ -197,9 +193,6 @@
             var correctList = document.getElementById('correct_place_list');
 
             var guessedWord = document.getElementById("guess_input").value;
-            console.log("word", word);
-            console.log("guessed", guessedWord);
-
             /* check for presence then place */
             for (var i = 0; i < guessedWord.length; i++) {
                 if (word.includes(guessedWord[i])) {
